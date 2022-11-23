@@ -1,0 +1,151 @@
+
+{% extends 'compareApp/layouts/base.html' %}
+
+{% load static %}
+
+{% block 'content' %}
+
+      <div  class="about">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Make a Comparison </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-10 offset-md-1">
+                       <form action="/form" method="post">
+                           {% csrf_token %}
+                           <div class="form-group">
+                             <h2>1. Distance Travelled On Daily Basis</h2>
+                             <h3>Urban</h3> <input type="number" name="urban" class="form-control" id="exampleFormControlInput1" placeholder="eg. 50km">
+                             <h3>Sub-Urban</h3> <input type="number" name="suburban" class="form-control" id="exampleFormControlInput2" placeholder="eg. 50km">
+                             <h3>Highway</h3> <input type="number" name="highway" class="form-control" id="exampleFormControlInput3" placeholder="eg. 50km">
+                             <h2>2. What's your regular driving pattern</h2>"
+                             <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="avgspddrvr" id="inlineRadio1" value="normal">
+                              <label class="form-check-label" for="inlineRadio1">Average Speed Driver (0-40 Kmph)</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="avgspddrvr" id="inlineRadio2" value="aggressive">
+                              <label class="form-check-label" for="inlineRadio2">Above Average Speed Driver (40-80 Kmph)</label>
+                            </div>
+                            <h2>3. How much capital you can spend on buying a new vehicle?</h2>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="capital" id="inlineRadio3" value="8-10">
+                              <label class="form-check-label" for="inlineRadio3">8 Lakhs-10 Lakhs</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="capital" id="inlineRadio4" value="option2">
+                              <label class="form-check-label" for="inlineRadio4">INR 50,000-60,000</label>
+                            </div>
+                            <h2>4. Geographical Area?</h2>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="areas" id="inlineRadio5" value="Delhi">
+                              <label class="form-check-label" for="inlineRadio5">Delhi</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="areas" id="inlineRadio6" value="Mumbai">
+                              <label class="form-check-label" for="inlineRadio6">Mumbai</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="areas" id="inlineRadio7" value="Kolkata">
+                              <label class="form-check-label" for="inlineRadio7">kolkata</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="areas" id="inlineRadio8" value="Chennai">
+                              <label class="form-check-label" for="inlineRadio8">Chennai</label>
+                            </div>
+                               <button class="btn btn-primary" type="submit">Compare</button>
+                           </div>
+                        </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end about -->
+      
+      <!--  footer -->
+      <footer id="contact">
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="titlepage">
+                        <h2>Contact Us</h2>
+                     </div>
+                  </div>
+                  <div class="col-md-8">
+                     <ul class="location_icon">
+                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a> Locatins</li>
+                        <li><a href="#"><i class="fa fa-volume-control-phone" aria-hidden="true"></i></a> +71 9087654321</li>
+                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>demo@gmail.com</li>
+                     </ul>
+                  </div>
+                  <div class="col-md-6">
+                     <form id="request" class="main_form">
+                        <div class="row">
+                           <div class="col-md-12 ">
+                              <input class="contactus" placeholder="Full Name" type="type" name="Full Name"> 
+                           </div>
+                           <div class="col-md-12">
+                              <input class="contactus" placeholder="Email" type="type" name="Email"> 
+                           </div>
+                           <div class="col-md-12">
+                              <input class="contactus" placeholder="Phone Number" type="type" name="Phone Number">                          
+                           </div>
+                           <div class="col-md-12">
+                              <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message </textarea>
+                           </div>
+                           <div class="col-sm-col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <button class="send_btn">Send</button>
+                           </div>
+                           <div class="col-sm-col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <ul class="social_icon">
+                                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                                 <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="map">
+                        <figure><img src="{% static 'images/map.jpg' %}" alt="#"/></figure>
+                     </div>
+                     <form class="bottom_form">
+                        <h3>Newsletter</h3>
+                        <input class="enter" placeholder="Enter your email" type="text" name="Enter your email">
+                        <button class="sub_btn">subscribe</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <p>Copyright 2019 All Right Reserved By <a href="https://html.design/"> Free  html Templates</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+
+
+{% endblock 'content' %}
+
+
+{% block 'scripts' %}
+
+
+{% endblock 'scripts' %}
