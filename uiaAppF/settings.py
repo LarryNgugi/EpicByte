@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "compareApp",
     "widget_tweaks",
+    "crispy_forms",
 
 ]
 
@@ -127,3 +128,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # login redirect
 
 LOGIN_REDIRECT_URL = "/form"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
