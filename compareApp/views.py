@@ -19,11 +19,24 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-
 from .forms import NewUserForm
 
 opcostICE = []
 opcostEV = []
+capitalICE=0
+ownershipICE=0
+maintainenceICE=0
+resaleICE=0
+insuranceICE=0
+opCostICE1=0
+
+capitalEV=0
+ownershipEV=0
+maintainenceEV=0
+resaleEV=0
+insuranceEV=0
+opCostEV1=0
+drivingRange=0
 
 
 @login_required()
@@ -111,8 +124,9 @@ def chargeCost(urban, suburban, highway, driverType, drivingRange, batteryCapaci
         opcostEV.append(cost)
     return cost
 
+costs_ice = [capitalICE, opcostICE, insuranceICE, maintainenceICE, resaleICE]
+costs_ev = [capitalEV, opcostEV, insuranceEV, maintainenceEV, resaleEV]
 
-@login_required()
 def chargeCost(urban, suburban, highway, driverType, drivingRange, batteryCapacity):
     df1 = pd.read_excel("compareApp/data files/Electricity Prices.xlsx")
     cost = 0
@@ -136,7 +150,7 @@ def chargeCost(urban, suburban, highway, driverType, drivingRange, batteryCapaci
     powerRequired = powerRequired + (powerRequired) * afactor
     powerRequired = powerRequired * 365
 
-    for i in range(1, 6):
+    for i in range(1, 7):
         year = 2022 + i
         df2 = df1.loc[df1['Year'] == year]
         cost = cost + (df2['Delhi'].iloc[0] * powerRequired)
@@ -152,46 +166,69 @@ def index(request):
     return render(request, 'compareApp/index.html', context)
 
 
-@login_required
+
 def form(request):
     if request.method == "POST":
-        df = pd.read_excel("C:/Users/15264/uiaAppF/compareApp/data files/ICE_FINAL.xlsx")
-        df1 = pd.read_excel("C:/Users/15264/uiaAppF/compareApp/data files/EV_FINAL.xlsx")
-        urban = int(request.POST['urban'])
-        suburban = int(request.POST['suburban'])
-        highway = int(request.POST['highway'])
+        # df = pd.read_excel("compareApp/data files/ICE_FINAL.xlsx")
+        # df1 = pd.read_excel("compareApp/data files/EV_FINAL.xlsx")
+        # urban = int(request.POST['urban'])
+        # suburban = int(request.POST['suburban'])
+        # highway = int(request.POST['highway'])
+        #
+        # speedOn = request.POST['avgspddrvr']
+        # driverType = ""
+        #
+        # if speedOn == 'normal':
+        #     driverType = "normal"
+        # else:
+        #     driverType = "aggressive"
+        #
+        # capital = request.POST['capital']
+        # area = request.POST['areas']
+        # # indexing error aa rha hai bcz hame radio button ki value mein bhi same wahi value daalni hai jo humne label mein daali hai like 4-8 price range
+        # df2 = df.loc[df['Price Range'] == capital]
+        # df3 = df1.loc[df1['Price Range'] == capital]
+        #
+        # fuelType = str(df2.iloc[:, 2])
+        # mileage = int(df2.iloc[:, 3])
+        # capitalICE=int(df2.iloc[:, 10])
+        # maintainenceICE=int(df2.iloc[:, 9])
+        # insuranceICE=int(df2.iloc[:, 8])
+        # resaleICE=int(df2.iloc[:, 7])
+        #
+        #
+        # batteryCapacity = int(df2.iloc[:, 3])
+        # drivingRange = int(df3.iloc[:, 2])
+        # capitalEV = int(df2.iloc[:, 10])
+        # maintainenceEV = int(df2.iloc[:, 9])
+        # insuranceEV = int(df2.iloc[:, 8])
+        # resaleEV = int(df2.iloc[:, 7])
+        #
+        # print(area)
+        #
+        # opCostICE1 = fuelCost(fuelType, urban, suburban, highway, driverType, mileage, area)
+        # opCostEV1 = chargeCost(urban, suburban, highway, driverType, drivingRange, batteryCapacity, area)
+        #
+        # ownershipEV=capitalEV+maintainenceEV+opCostEV1+insuranceEV-resaleEV
+        # ownershipICE=capitalICE+maintainenceICE+opCostICE1+insuranceICE-resaleICE
+        #
+        # print(opCostICE1)
+        # stri = str(opCostICE1) + "  " + str(opCostEV1)
+        #
+        # lstEV=list(capitalEV, opCostEV1, insuranceEV, maintainenceEV, resaleEV)
+        # lstICE=list(capitalICE, opCostICE1, insuranceICE, maintainenceICE, resaleICE)
 
-        speedOn = request.POST['avgspddrvr']
-        driverType = ""
+        # operating_line_plot(opcostICE, opcostEV)
+        # cost_break_pie_ev(lstEV)
+        # ownership_cost_compare(ownershipICE, ownershipEV)
+        # costs_compare_bar(lstICE)
+        # ev_efficiency_reduction(drivingRange)
+        from .dashboard import graphsPlot
+        graphsPlot()
+        return render(request, 'compareApp/compare.html')
 
-        if speedOn == 'normal':
-            driverType = "normal"
-        else:
-            driverType = "aggressive"
-
-        capital = request.POST['capital']
-        area = request.POST['areas']
-        # indexing error aa rha hai bcz hame radio button ki value mein bhi same wahi value daalni hai jo humne label mein daali hai like 4-8 price range
-        df2 = df.loc[df['Price Range'] == capital]
-        df3 = df1.loc[df1['Price Range'] == capital]
-
-        fuelType = str(df2.iloc[:, 2])
-        mileage = int(df2.iloc[:, 3])
-
-        batteryCapacity = int(df2.iloc[:, 3])
-        drivingRange = int(df3.iloc[:, 2])
-
-        print(area)
-
-        opCostICE = fuelCost(fuelType, urban, suburban, highway, driverType, mileage, area)
-        opCostEV = chargeCost(urban, suburban, highway, driverType, drivingRange, batteryCapacity, area)
-
-        print(opCostICE)
-        stri = str(opCostICE) + "  " + str(opCostEV)
-        return HttpResponse(stri)
     else:
         return render(request, 'compareApp/Form.html')
-
 
 def about(request):
     year = date.today().year
